@@ -5,6 +5,11 @@
 # 1. Tidak ada produksi epsilon
 # 2. Seluruhnya huruf besar
 
+import os
+
+# File locator
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 def isTerminal(str):
     # Mengembalikan True jika str adalah terminal
     return str in [
@@ -17,6 +22,7 @@ def isVariable(str):
     return not isTerminal(str)
 
 def CFG_TO_CNF(File_Path):
+    File_Path = os.path.join(dir_path, File_Path)
     file = open(File_Path, 'r')
     fileLines = file.read().split('\n')
     CFG = {}
@@ -80,7 +86,6 @@ def CFG_TO_CNF(File_Path):
                         CNF[newVar] = [member]
             CNF[lhs] += prod    
 
-
     return CNF
 
 
@@ -90,5 +95,5 @@ def printCFG(CFG):
 
         
 if __name__ == "__main__":
-    CFG_TO_CNF("Grammar.in")
-    printCFG(CFG_TO_CNF("testcase.in"))
+    CFG_TO_CNF("../grammar/Grammar.in")
+    printCFG(CFG_TO_CNF("../grammar/testcase.in"))
