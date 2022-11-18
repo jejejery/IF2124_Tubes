@@ -78,12 +78,12 @@ def CFG_TO_CNF(File_Path):
         for prod in rhs:
             if len(prod) > 1:
                 # Tidak boleh ada terminal
-                for member in prod:
-                    if isTerminal(member):
+                for i in range(len(prod)):
+                    if isTerminal(prod[i]):
                         newVar = 'V' + str(nomorVar)
                         nomorVar += 1
-                        member = newVar
-                        CNF[newVar] = [member]
+                        CNF[newVar] = [prod[i]]
+                        prod[i] = newVar
             CNF[lhs] += prod    
 
     file.close()
@@ -91,6 +91,7 @@ def CFG_TO_CNF(File_Path):
 
 
 def printCFG(CFG):
+    print("Ini Mulai")
     for lhs, rhs in CFG.items():
         print(lhs, '->', rhs) 
 
