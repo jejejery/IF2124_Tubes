@@ -86,14 +86,45 @@ def CFG_TO_CNF(File_Path):
                         CNF[newVar] = [member]
             CNF[lhs] += prod    
 
+    file.close()
     return CNF
 
 
 def printCFG(CFG):
     for lhs, rhs in CFG.items():
-        print(lhs, '->', rhs)  
+        print(lhs, '->', rhs) 
+
+def Parsing_CYK(word,CNF):
+    word = word.split(" ")
+    n = len(word)
+    T = [[set([]) for j in range(n)] for i in range(n)]
+
+    for j in range(n):
+        for head, body in CNF.items():
+            for rule in body:
+                if len(rule) == 1 and rule[0] == word[j]:
+                    T[j][j].add(head)
+
+        for i in range(j, -1, -1):
+            for k in range(i, j):
+                for head, body in CNF.items():
+                    for rule in body:
+                        if len(rule) == 2 and rule[0] in T[i][k] and rule[1] in T[k + 1][j]:
+                            T[i][j].add(head)
+
+    print(T)
+    return len(T[0][n - 1]) != 0
+# Driver Code
+
+# Given string
+w = "X"
+
+# Function Call
+if(Parsing_CYK(w, CFG_TO_CNF("../grammar/testcase.in"))):
+    print("yes!")
 
         
 if __name__ == "__main__":
     CFG_TO_CNF("../grammar/Grammar.in")
     printCFG(CFG_TO_CNF("../grammar/testcase.in"))
+    print(Parsing_CYK(w, CFG_TO_CNF("../grammar/testcase.in")))
