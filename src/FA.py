@@ -125,6 +125,7 @@ def isExp(string):
   return True
 
 # print(isVariable('_123asf'))
+print(isVariable('_asem'))
 # print(isNumber("43.23"))
 # print(isExp("a+b-23.41"))
       
