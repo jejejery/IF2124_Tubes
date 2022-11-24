@@ -64,7 +64,9 @@ def lexer(filePath):
         "try"       : "TRY",
         "true"      : "TRUE",
         "var"       : "VAR",
-        "while"     : "WHILE"
+        "while"     : "WHILE",
+        "new"       : "NEW",
+        "Array"     : "ARRAY_DECL",
     }
 
 
@@ -174,6 +176,10 @@ def lexer(filePath):
                 ret += "CLOSE_PARANTHESES "
             elif c in ';':
                 ret += "SEMICOLON "
+            elif c in ',':
+                ret += "COMMA "
+            elif c in ':':
+                ret += "COLON "
             elif c in '[':
                 ret += "OPEN_BRACKET "
             elif c in ']':
@@ -188,9 +194,10 @@ def lexer(filePath):
                 ret += "OR "
             elif c in '&':
                 ret += "AND "
+            elif c in '!':
+                ret += "NOT "
             
-            
-                
+                          
                 
 
         file.close()

@@ -17,8 +17,8 @@ def isTerminal(str):
         'NUMBER',
         'VARIABLE',
         'STRING',
-        'FUNCTION_DECL',
-        'VARIABLE_NAME',
+        'FUNCTION',    
+        'VARIABLE',
         'OPEN_PARENTHESES',
         'CLOSE_PARENTHESES',
         'OPEN_BRACKET',
@@ -33,6 +33,7 @@ def isTerminal(str):
         'IF',
         'ELIF',
         'DO',
+        'FOR',
         'WHILE',
         'BREAK',
         'CONTINUE',
@@ -53,9 +54,12 @@ def isTerminal(str):
         'AND',
         'OR',
         'NOT',
-        # 'X',
-        # 'ayam',
-        # 'puyeng',
+        'COLON',
+        'SEMICOLON',
+        'NOT',          
+        'ARRAY_DECL',  
+        'NEW'
+
 
     ]
 
@@ -176,7 +180,7 @@ def CYK_Parsing(CNF, string_input):
 # Driver Code
 
 # Given string
-# w = "X ayam X puyeng X X"
+w = "DO "
 
 # # Function Call
 # if(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w)):
@@ -187,6 +191,6 @@ def loadCNF():
 
 if __name__ == "__main__":
     CFG_TO_CNF("../grammar/Grammar.in")
-    # CFG_TO_CNF("../grammar/testcase.in")
+    CFG_TO_CNF("../grammar/testcase.in")
     # printCFG(CFG_TO_CNF("../grammar/testcase.in"))
-    # print(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w))
+    print(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w))
