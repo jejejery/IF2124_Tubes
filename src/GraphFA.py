@@ -64,7 +64,9 @@ def lexer(filePath):
         "try"       : "TRY",
         "true"      : "TRUE",
         "var"       : "VAR",
-        "while"     : "WHILE"
+        "while"     : "WHILE",
+        "new"       : "NEW",
+        "do"        : "DO"
     }
 
 
@@ -81,8 +83,27 @@ def lexer(filePath):
             if c in ' \r\n':
                 pass
             
-            elif c in '+-':
-                ret += "ARIT_OPERATOR "
+            elif c in '+':
+                c = fileStr[itr]
+                if c in '+':
+                    itr += 1
+                    ret += "INCREMENT "
+                elif c in '=':
+                    itr += 1
+                    ret += "SUMAS "
+                else:
+                    ret += "SIGN "
+
+            elif c in '-':
+                c = fileStr[itr]
+                if c in '-':
+                    itr += 1
+                    ret += "INCREMENT "
+                elif c in '=':
+                    itr += 1
+                    ret += "SUBAS "
+                else:
+                    ret += "SIGN "
 
             elif c in '/':
                 peek = itr
@@ -94,15 +115,36 @@ def lexer(filePath):
                         itr += 1
                         if c in '\n':
                             break
+                elif c in '=':
+                    itr += 1
+                    ret += "DIVAS "
                 else:
-                    ret += "ARIT_OPERATOR "
+                    ret += "OTHER_ARIT_OPERATOR "
+            
+            elif c in '%':
+                c = fileStr[itr]
+                if c in '=':
+                    itr += 1
+                    ret += "MODAS "
+                else:
+                    ret += "OTHER_ARIT_OPERATOR "
 
             elif c in '*':
                 c = fileStr[itr]
                 if c in '*':
                     # Exponent
                     itr += 1
-                ret += "ARIT_OPERATOR "
+                    c = fileStr[itr]
+                    if c in '=':
+                        itr += 1
+                        ret += "POWAS "
+                    else:
+                        ret += "OTHER_ARIT_OPERATOR "
+                elif c in '=':
+                    itr += 1
+                    ret += 'MULAS '
+                else:
+                    ret += "OTHER_ARIT_OPERATOR "
 
             elif c in letters:
                 # Baca sebuah variabel / keyword
@@ -174,24 +216,56 @@ def lexer(filePath):
                 ret += "CLOSE_PARANTHESES "
             elif c in ';':
                 ret += "SEMICOLON "
+            elif c in ',':
+                ret += "COMMA "
+            elif c in ':':
+                ret += "COLON "
             elif c in '[':
                 ret += "OPEN_BRACKET "
             elif c in ']':
                 ret += "CLOSE_BRACKET "
             elif c in '=':
-                ret += "EQ "
-            elif c in '<':
-                ret += "LT "
-            elif c in '>':
-                ret += "GT "
-            elif c in '|':
-                ret += "OR "
+                c = fileStr[itr]
+                if c in '=':
+                    itr += 1
+                    c = fileStr[itr]
+                    if c in '=':
+                        itr += 1
+                    ret += "LOGI_OPERATOR "
+                else:
+                    ret += "EQ "
+
+            elif c in '><':
+                c = fileStr[itr]
+                if c in '=':
+                    itr += 1
+                ret += "LOGI_OPERATOR "
             elif c in '&':
-                ret += "AND "
+                c = fileStr[itr]
+                if c in '=':
+                    itr += 1
+                    ret += "ANDAS "
+                else:
+                    if c in '&':
+                        itr += 1
+                    ret += "OTHER_ARIT_OPERATOR "
+            elif c in '|':
+                c = fileStr[itr]
+                if c in '=':
+                    itr += 1
+                    ret += "ORAS "
+                else:
+                    if c in '|':
+                        itr += 1
+                    ret += "OTHER_ARIT_OPERATOR "
+            elif c in '!':
+                c = fileStr[itr]
+                if c in '=':
+                    itr += 1
+                    ret += "LOGI_OPERATOR "
+                else: 
+                    ret += "NOT "
             
-            
-                
-                
 
         file.close()
     except Exception as e:
@@ -205,4 +279,26 @@ if __name__ == "__main__":
     root = State()
     varState = State(next = {}, term = "VARIABLE_NAME")
     print(lexer("../js/test.js"))
+    addWord(root, "break", "BREAK")
+    addWord(root, "const", "CONST")
+    addWord(root, "case", "CASE")
+    addWord(root, "catch", "CATCH")
+    addWord(root, "continue", "CONTINUE")
+    addWord(root, "default", "DEFAULT")
+    addWord(root, "delete", "DELETE")
+    addWord(root, "else", "ELSE")
+    addWord(root, "false", "FALSE")
+    addWord(root, "finally", "FINALLY")
+    addWord(root, "for", "FOR")
+    addWord(root, "function", "FUNCTION")
+    addWord(root, "if", "IF")
+    addWord(root, "let", "LET")
+    addWord(root, "null", "NULL")
+    addWord(root, "return", "RETURN")
+    addWord(root, "switch", "SWITCH")
+    addWord(root, "throw", "THROW")
+    addWord(root, "try", "TRY")
+    addWord(root, "true", "TRUE")
+    addWord(root, "var", "VAR")
+    addWord(root, "while", "WHILE")
     
