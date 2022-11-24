@@ -7,6 +7,7 @@
 
 import os
 import time
+import json
 
 # File locator
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -30,6 +31,14 @@ def isTerminal(str):
         'CONST',
         'LET',
         'EQ',
+        'SUBAS',
+        'MULAS',
+        'SUMAS',
+        'DIVAS',
+        'MODAS',
+        'POWAS',
+        'ANDAS',
+        'ORAS',
         'IF',
         'ELIF',
         'ELSE',
@@ -38,35 +47,32 @@ def isTerminal(str):
         'WHILE',
         'BREAK',
         'CONTINUE',
-        'ADD',
-        'SUB',
-        'MUL',
-        'DIV',
-        'MOD',
-        'POW',
+        'SIGN',
+        'OTHER_ARIT_OPERATOR',
         'FALSE',
         'TRUE',
-        'ISEQ',
-        'ISNEQ',
-        'LEQ',
-        'LT',
-        'GEQ',
-        'GT',
+        'LOGI_OPERATOR ',
         'AND',
         'OR',
         'NOT',
         'COLON',
-        'SEMICOLON',
-        'NOT',          
+        'SEMICOLON',          
         'ARRAY_DECL',  
         'NEW',
-        'SUBAS',
-        'SUMAS',
-        'MULAS',
-        'DIVAS',
-        'MODAS',
-        'POWAS',
         'NULL',
+        'SWITCH',
+        'CASE',
+        'CATCH',
+        'DEFAULT',
+        'DELETE',
+        'FINALLY',
+        'TRY',
+        'RETURN',
+        'THROW',
+        'INCREMENT',
+        'DECREMENT',
+        
+
 
 
     ]
@@ -85,7 +91,10 @@ def CFG_TO_CNF(File_Path):
         a, b = x.split(' -> ')
         if a not in CFG.keys():
             CFG[a] = []
-        CFG[a] += [b.split(' ')]
+        add = b.split(' ')
+        if len(add[-1]) == 0:
+            add = add[:-1]
+        CFG[a] += [add]
     
 
     # Menghilangkan unit production
@@ -167,17 +176,24 @@ def printCFG(CFG):
     for lhs, rhs in CFG.items():
         print(lhs, '->', rhs) 
 
+def printToFile(CFG):
+    with open('../grammar/Grammar.out', 'w') as f:
+        for lhs, rhs in CFG.items():
+            f.write(json.dumps(lhs) + ' -> ' + json.dumps(rhs) + '\n') 
+
 def CYK_Parsing(CNF, string_input):
     W = string_input.split(" ")
+    W = W[:len(W)-1]
     N = len(W)
     table = [[set([]) for j in range(N)] for i in range(N)]
 
     for j in range(N):
+        table[j][j].add(W[j])
         for lhs, rhs in CNF.items():
             for rule in rhs:
                 if len(rule) == 1 and rule[0] == W[j]:
                     table[j][j].add(lhs)
-            print(table[j][j])
+            
             
         for i in range(j, -1, -1):
             for k in range(i, j):
@@ -185,6 +201,7 @@ def CYK_Parsing(CNF, string_input):
                     for rule in rhs:
                         if len(rule) == 2 and rule[0] in table[i][k] and rule[1] in table[k + 1][j]:
                             table[i][j].add(lhs)
+            # print(i, j, table[i][j])
 
     #Bonus?
     # last_s = 0
@@ -205,15 +222,15 @@ def CYK_Parsing(CNF, string_input):
 # Given string
 w = "DO "
 
-# # Function Call
-# if(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w)):
-#     print("yes!")
+
+
 
 def loadCNF():
-    return CFG_TO_CNF("../grammar/Grammar2.in")
+    return CFG_TO_CNF("../grammar/Grammar.in")
 
 if __name__ == "__main__":
-    CFG_TO_CNF("../grammar/Grammar.in")
-    CFG_TO_CNF("../grammar/testcase.in")
+    printToFile(CFG_TO_CNF("../grammar/Grammar.in"))
+    # CFG_TO_CNF("../grammar/Grammar.in")
+    # CFG_TO_CNF("../grammar/testcase.in")
     # printCFG(CFG_TO_CNF("../grammar/testcase.in"))
-    print(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w))
+    # print(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w))
