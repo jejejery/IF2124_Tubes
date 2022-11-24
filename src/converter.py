@@ -121,10 +121,17 @@ def CFG_TO_CNF(File_Path):
                 # Ubah produksi di belakang
                 first = prod[:2]
                 tail = prod[2:]
-                newVar = 'V' + str(nomorVar)
-                CNF[newVar] = [first]
-                prod = [newVar] + tail
-                nomorVar += 1
+                varExist = False
+                for key, val in CNF.items():
+                    if val == [first]:
+                        prod = [key] + tail
+                        varExist = True
+                        break
+                if not varExist:
+                    newVar = 'V' + str(nomorVar)
+                    CNF[newVar] = [first]
+                    prod = [newVar] + tail
+                    nomorVar += 1
             CNF[lhs] += [prod]
 
     # Mengubah Produksi dengan > 1 terminal
@@ -138,10 +145,17 @@ def CFG_TO_CNF(File_Path):
                 # Tidak boleh ada terminal
                 for i in range(len(prod)):
                     if isTerminal(prod[i]):
-                        newVar = 'V' + str(nomorVar)
-                        nomorVar += 1
-                        CNF[newVar] = [[prod[i]]]
-                        prod[i] = newVar
+                        varExist = False
+                        for key, val in CNF.items():
+                            if(val == [[prod[i]]]):
+                                prod[i] = key
+                                varExist = True
+                                break
+                        if not varExist:
+                            newVar = 'V' + str(nomorVar)
+                            nomorVar += 1
+                            CNF[newVar] = [[prod[i]]]
+                            prod[i] = newVar
             CNF[lhs] += [prod]    
 
     file.close()
