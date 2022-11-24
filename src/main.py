@@ -11,5 +11,6 @@ if __name__ == "__main__":
         tokens = GraphFA.lexer("../js/" + sys.argv[1])
     else:
         tokens = GraphFA.lexer("../js/test.js")
+    converter.printCFG(CNF)
     print(tokens)
-    print(converter.CYK_Parsing(CNF, tokens))
+    #\print(converter.CYK_Parsing(CNF, tokens))

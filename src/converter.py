@@ -32,6 +32,7 @@ def isTerminal(str):
         'EQ',
         'IF',
         'ELIF',
+        'ELSE',
         'DO',
         'FOR',
         'WHILE',
@@ -58,7 +59,14 @@ def isTerminal(str):
         'SEMICOLON',
         'NOT',          
         'ARRAY_DECL',  
-        'NEW'
+        'NEW',
+        'SUBAS',
+        'SUMAS',
+        'MULAS',
+        'DIVAS',
+        'MODAS',
+        'POWAS',
+        'NULL',
 
 
     ]
@@ -155,7 +163,8 @@ def CYK_Parsing(CNF, string_input):
             for rule in rhs:
                 if len(rule) == 1 and rule[0] == W[j]:
                     table[j][j].add(lhs)
-
+            print(table[j][j])
+            
         for i in range(j, -1, -1):
             for k in range(i, j):
                 for lhs, rhs in CNF.items():
@@ -187,7 +196,7 @@ w = "DO "
 #     print("yes!")
 
 def loadCNF():
-    return CFG_TO_CNF("../grammar/Grammar.in")
+    return CFG_TO_CNF("../grammar/Grammar2.in")
 
 if __name__ == "__main__":
     CFG_TO_CNF("../grammar/Grammar.in")
