@@ -27,7 +27,10 @@ if __name__ == "__main__":
         
         CNF = converter.loadCNF()
         tokens = GraphFA.lexer("../js/" + sys.argv[1])
-        print(f'Result: {parser.CYK_Parsing(CNF, tokens)}')
+        if parser.CYK_Parsing(CNF, tokens):
+            print("\nResult : Accepted")
+        else:
+            print("\nResult : Syntax Error")
 
         END_TIME = time.time()
         print('Execution time : ', round(END_TIME-START_TIME, 2),'s')

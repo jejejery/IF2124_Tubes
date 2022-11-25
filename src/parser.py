@@ -4,12 +4,13 @@ def CYK_Parsing(CNF, string_input):
     print()
     W = string_input.split(" ")
     W = W[:len(W)-1]
+    if(not W): return True #Handle kasus kosong
     N = len(W)
     table = [[set([]) for j in range(N)] for i in range(N)]
     toc = time.time()
     
     for j in range(N):
-        if(time.time() - toc > 0.5):
+        if(time.time() - toc > 2):
             print(f"Progress: {round(j*j*j*100/(N*N*N),2)}%")
             toc = time.time()
         table[j][j].add(W[j])

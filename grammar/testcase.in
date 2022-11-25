@@ -1,8 +1,0 @@
-S -> A
-A -> B X X
-A -> B
-B -> C
-C -> D
-C -> E
-D -> X ayam puyeng
-E -> X ayam

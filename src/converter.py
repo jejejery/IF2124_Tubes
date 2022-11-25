@@ -74,8 +74,8 @@ def isTerminal(str):
         'TYPEOF',
         'RETURN',
         'THROW',
-        'INCREMENT'
-        
+        'INCREMENT',
+        'TERNARY'
     ]
 
 def isVariable(str):

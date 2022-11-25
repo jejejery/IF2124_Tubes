@@ -1,11 +1,13 @@
- 
+function example() {
+  return condition1 ? value1
+        : condition2 ? value2
+        : condition3 ? value3
+        : value4;
+}
 
 let x = 2;
-switch (2) {
+switch (x) {
   case 1:
-    // if (true) {
-    //   continue;
-    // }
     console.log('negative 1');
     break;
   case 2:

@@ -1,1 +1,0 @@
-print(converter.CYK_Parsing(CNF, tokens))

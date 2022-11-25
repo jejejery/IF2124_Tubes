@@ -1,39 +1,5 @@
 import os
 
-class State:
-    def __init__(self, next = {}, term = ""):
-        self.next = next
-        self.term = term
-    
-    def connect(self, char, dest):
-        self.next[char] = dest
-
-def addWord(root, str, terminal):
-    # Menambah word ke dalam tree
-    # Menambah edge ke State khusus untuk variabel
-    for char in str:
-        if not char in root.next:
-            root.next[char] = State(next = {})
-        root = root.next[char]
-    root.term = terminal
-
-def searchWord(root, str):
-    # Mengembalikan array of token yang sesuai dengan str
-    ret = []
-    pos = root
-    for x in str:
-        if x not in pos.next:
-            if len(pos.term) == 0:
-                return []
-            else:
-                ret += [pos.term]
-                pos = root
-        else:
-            pos = pos.next[x]
-    if pos != root:
-        ret += [pos.term]
-    return ret
-
 def lexer(filePath):
     # Mengembalikan string token berisi hasil konversi file .js 
     # Menggunakan FA untuk mengenali karakter / string / numeral / keyword
@@ -288,7 +254,8 @@ def lexer(filePath):
                             ret += "OTHER_ARIT_OPERATOR "
                     else:
                         ret += "LOGI_OPERATOR "
-
+                elif c in '?':
+                    ret += "TERNARY "
                 elif c in '&':
                     c = fileStr[itr]
                     if c in '=':
@@ -343,33 +310,4 @@ def lexer(filePath):
         print(e)
 
     return ret
-    
-    
-
-if __name__ == "__main__":
-    root = State()
-    varState = State(next = {}, term = "VARIABLE_NAME")
-    print(lexer("../js/test.js"))
-    addWord(root, "break", "BREAK")
-    addWord(root, "const", "CONST")
-    addWord(root, "case", "CASE")
-    addWord(root, "catch", "CATCH")
-    addWord(root, "continue", "CONTINUE")
-    addWord(root, "default", "DEFAULT")
-    addWord(root, "delete", "DELETE")
-    addWord(root, "else", "ELSE")
-    addWord(root, "false", "FALSE")
-    addWord(root, "finally", "FINALLY")
-    addWord(root, "for", "FOR")
-    addWord(root, "function", "FUNCTION")
-    addWord(root, "if", "IF")
-    addWord(root, "let", "LET")
-    addWord(root, "null", "NULL")
-    addWord(root, "return", "RETURN")
-    addWord(root, "switch", "SWITCH")
-    addWord(root, "throw", "THROW")
-    addWord(root, "try", "TRY")
-    addWord(root, "true", "TRUE")
-    addWord(root, "var", "VAR")
-    addWord(root, "while", "WHILE")
     
