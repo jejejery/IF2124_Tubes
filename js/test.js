@@ -1,1 +1,1 @@
-let MAki = true;
+const p = true, q = false;

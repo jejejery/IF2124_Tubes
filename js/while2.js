@@ -10,5 +10,7 @@ while (true) {
   x = y + (y);
   if(i == 2){
     break;
+  } else if (i == 3) {
+    continue;
   }
 }

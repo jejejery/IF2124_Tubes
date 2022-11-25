@@ -6,4 +6,13 @@ function do_something(x) {
         break;
       }
     }
+    switch(x+2){
+      case 1:
+        x -= 11;
+        break;
+      case 2:
+        console.log('2');
+        break;
+    }
   }
+

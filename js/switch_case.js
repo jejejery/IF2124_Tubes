@@ -1,8 +1,11 @@
-//true
+ 
 
 let x = 2;
 switch (2) {
   case 1:
+    // if (true) {
+    //   continue;
+    // }
     console.log('negative 1');
     break;
   case 2:
@@ -11,10 +14,17 @@ switch (2) {
   case ![1,2,3]:
     console.log('negative 3');
     str = func();
-    break;
+    if (true) {
+      break;
+    }
   case -8:
     console.log('negative 8');
-    break;
+    while (true) {
+      if (true) {
+        continue;
+      }
+      break;
+    }
   case 'moke':
     console.log('yeayr');
     break;

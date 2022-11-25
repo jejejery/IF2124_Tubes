@@ -69,12 +69,8 @@ def isTerminal(str):
         'TRY',
         'RETURN',
         'THROW',
-        'INCREMENT',
-        'DECREMENT',
+        'INCREMENT'
         
-
-
-
     ]
 
 def isVariable(str):
