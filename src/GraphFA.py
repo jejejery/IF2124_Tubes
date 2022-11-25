@@ -40,7 +40,7 @@ def lexer(filePath):
 
     filepath = os.path.join(os.path.dirname(os.path.realpath(__file__)), filePath)
     ret = ""
-    letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM_"
+    letters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM_$"
     numbers = "0123456789"
     keyword = {
         "break"     : "BREAK",
@@ -62,6 +62,7 @@ def lexer(filePath):
         "switch"    : "SWITCH",
         "throw"     : "THROW",
         "try"       : "TRY",
+        "typeof"    : "TYPEOF",
         "true"      : "TRUE",
         "var"       : "VAR",
         "while"     : "WHILE",

@@ -1,1 +1,1 @@
-print(converter.cyk_parse(CNF, tokens))
+print(converter.CYK_Parsing(CNF, tokens))

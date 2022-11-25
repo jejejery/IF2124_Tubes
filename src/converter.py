@@ -67,6 +67,7 @@ def isTerminal(str):
         'DELETE',
         'FINALLY',
         'TRY',
+        'TYPEOF',
         'RETURN',
         'THROW',
         'INCREMENT'
@@ -178,6 +179,7 @@ def printToFile(CFG):
             f.write(json.dumps(lhs) + ' -> ' + json.dumps(rhs) + '\n') 
 
 def CYK_Parsing(CNF, string_input):
+    print()
     W = string_input.split(" ")
     W = W[:len(W)-1]
     N = len(W)
@@ -201,36 +203,20 @@ def CYK_Parsing(CNF, string_input):
                     for rule in rhs:
                         if len(rule) == 2 and rule[0] in table[i][k] and rule[1] in table[k + 1][j]:
                             table[i][j].add(lhs)
-            # print(i, j, table[i][j])
 
-    #Bonus?
-    # last_s = 0
-    # for i in range(N):
-    #     if 'S' in table[0][i]: 
-    #         last_s = i
     
-    # error_line = 1
-    # for i in range(last_s + 1):
-    #     if '\n' in raw_tokenized[i]:
-    #         error_line += 1
     return 'S' in table[0][N - 1]
-
-
-
-# Driver Code
-
-# Given string
-w = "DO "
-
 
 
 
 def loadCNF():
     return CFG_TO_CNF("../grammar/Grammar.in")
 
-if __name__ == "__main__":
-    printToFile(CFG_TO_CNF("../grammar/Grammar.in"))
-    # CFG_TO_CNF("../grammar/Grammar.in")
-    # CFG_TO_CNF("../grammar/testcase.in")
-    # printCFG(CFG_TO_CNF("../grammar/testcase.in"))
-    # print(CYK_Parsing(CFG_TO_CNF("../grammar/testcase.in"),w))
+def printtitle():
+    print("""
+    ____  __  ____  _____  ____  ____ _   ____  ____ ______________  _____
+   / __ \/ / / / / / / _ \/ __ \/ __ `/  / __ \/ __ `/ ___/ ___/ _ \/ ___/
+  / /_/ / /_/ / /_/ /  __/ / / / /_/ /  / /_/ / /_/ / /  (__  )  __/ /
+ / .___/\__,_/\__, /\___/_/ /_/\__, /  / .___/\__,_/_/  /____/\___/_/
+/_/          /____/           /____/  /_/
+    """)
