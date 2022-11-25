@@ -186,8 +186,12 @@ def CYK_Parsing(CNF, string_input):
     W = W[:len(W)-1]
     N = len(W)
     table = [[set([]) for j in range(N)] for i in range(N)]
-
+    toc = time.time()
+    
     for j in range(N):
+        if(time.time() - toc > 0.5):
+            print(f"Progress: {round(j*100/N,2)}%")
+            toc = time.time()
         table[j][j].add(W[j])
         for lhs, rhs in CNF.items():
             for rule in rhs:
@@ -216,47 +220,7 @@ def CYK_Parsing(CNF, string_input):
     return 'S' in table[0][N - 1]
 
 
-def cyk_parse(tokenized, grammar):
-    tokenized = tokenized.split(" ")
-    tokenized.pop(len(tokenized)-1)
-    print(tokenized)
-    str_length = len(tokenized)
-    table = [[[] for i in range(str_length)] for j in range(str_length)]
 
-    for i in range(str_length):
-        for left_side in grammar.keys():
-            if tokenized[i] in grammar[left_side]:
-                table[i][i].append(left_side)
-
-    time_last = time.time()
-    for length in range(2, str_length + 1):
-        progress = int((length/str_length)*100)
-        delta = time.time() - time_last
-        print(f"Progress: {progress}%   -   Time Elapsed: {round(delta, 2)} s", end='\r')
-
-        for start in range(0, str_length - length + 1):
-            stop = start + length - 1
-            for i in range(start, stop):
-                for left_side in grammar.keys():
-                    if isinstance(grammar[left_side], list):
-                        for right_terms in grammar[left_side]:
-                            if right_terms[0] in table[start][i] and right_terms[1] in table[i+1][stop]:
-                                if left_side not in table[start][stop]:
-                                    table[start][stop].append(left_side)
-    print()
-    
-    last_s = 0
-    for i in range(str_length):
-        if 'S' in table[0][i]: 
-            last_s = i
-
-    # i = 0
-    # for row in table:
-    #     for elmt in row:
-    #         print(i, elmt)
-    #     i += 1
-        
-    return 'S' in table[0][str_length - 1], 
 # Driver Code
 
 # Given string
@@ -266,7 +230,7 @@ w = "DO "
 
 
 def loadCNF():
-    return CFG_TO_CNF("../grammar/Grammar2.in")
+    return CFG_TO_CNF("../grammar/Grammar.in")
 
 if __name__ == "__main__":
     printToFile(CFG_TO_CNF("../grammar/Grammar.in"))
